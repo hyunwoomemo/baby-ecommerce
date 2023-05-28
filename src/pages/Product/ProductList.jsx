@@ -47,17 +47,17 @@ const ProductItemWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+  justify-content: space-evenly;
 `;
 
 const ProductItem = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 30%;
+  max-width: 32%;
   overflow: hidden;
   gap: 10px;
   min-width: 200px;
-  flex: 1 1 auto;
   border-radius: 5px;
 
   @media (max-width: 1024px) {
@@ -73,7 +73,6 @@ const ProductWrapper = styled(Link)`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  flex: 1 1 auto;
 `;
 
 const ImageWrapper = styled.div`

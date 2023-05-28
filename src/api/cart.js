@@ -22,12 +22,12 @@ export const addToCart = async (product, user) => {
     if (cartSnapshot.exists()) {
       // 장바구니가 이미 존재하는 경우, 상품 추가
       await updateDoc(cartRef, {
-        items: arrayUnion({ id, userId, quantity, name, price, image, category, amount, size }),
+        items: arrayUnion({ id, userId, quantity, name, price, image, category, amount }),
       });
     } else {
       // 장바구니가 존재하지 않는 경우, 새로운 장바구니 생성
       await setDoc(cartRef, {
-        items: [{ id, userId, quantity, name, price, category, image, amount, size }],
+        items: [{ id, userId, quantity, name, price, category, image, amount }],
       });
     }
 

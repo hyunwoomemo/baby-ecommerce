@@ -54,6 +54,8 @@ const AddProduct = () => {
     } catch (error) {
       console.log(error);
     }
+
+    setAddProduct(false);
   });
 
   const handleDeleteImage = (image, index) => {

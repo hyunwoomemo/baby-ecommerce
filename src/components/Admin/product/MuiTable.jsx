@@ -26,6 +26,7 @@ import { fetchProducts } from "../../../api/product";
 import styled from "@emotion/styled";
 import { deleteDoc, doc } from "@firebase/firestore";
 import { db } from "../../../service/firebase";
+import { numberWithCommas } from "../../../utils/Won";
 
 function createData(id, name, category, price, amount, image) {
   return {
@@ -253,7 +254,7 @@ export default function MuiTable() {
     setDense(event.target.checked);
   };
 
-  const isSelected = (id) => selected.indexOf(id) !== -1;
+  const isSelected = (id) => selected?.indexOf(id) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
@@ -264,6 +265,7 @@ export default function MuiTable() {
 
   const handleDelete = async () => {
     await mutation.mutateAsync();
+    setSelected();
   };
 
   const mutation = useMutation(
@@ -281,10 +283,10 @@ export default function MuiTable() {
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} handleDelete={handleDelete} />
+        <EnhancedTableToolbar numSelected={selected?.length} handleDelete={handleDelete} />
         <TableContainer>
           <CustomTable sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={dense ? "small" : "medium"}>
-            <EnhancedTableHead numSelected={selected.length} order={order} orderBy={orderBy} onSelectAllClick={handleSelectAllClick} onRequestSort={handleRequestSort} rowCount={rows.length} />
+            <EnhancedTableHead numSelected={selected?.length} order={order} orderBy={orderBy} onSelectAllClick={handleSelectAllClick} onRequestSort={handleRequestSort} rowCount={rows.length} />
             <TableBody>
               {visibleRows.map((row, index) => {
                 const isItemSelected = isSelected(row.id);
@@ -316,7 +318,7 @@ export default function MuiTable() {
                     <CustomTableCell align="right">{row.name}</CustomTableCell>
                     <CustomTableCell align="right">{row.category}</CustomTableCell>
                     <CustomTableCell align="right">{row.price}</CustomTableCell>
-                    <CustomTableCell align="right">{row.amount}</CustomTableCell>
+                    <CustomTableCell align="right">{numberWithCommas(row.amount)}</CustomTableCell>
                     <CustomTableCell align="right">
                       <img src={row.image} alt="" />
                     </CustomTableCell>

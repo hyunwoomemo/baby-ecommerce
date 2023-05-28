@@ -26,11 +26,33 @@ function ProductDetails() {
     setIsHoverImg();
   };
 
+  const imageContainer = document?.querySelector(".image-container");
+  const image = imageContainer?.querySelector("img");
+
+  imageContainer?.addEventListener("mousemove", handleMouseMove);
+  imageContainer?.addEventListener("mouseleave", handleMouseLeave2);
+
+  function handleMouseMove(event) {
+    const { left, top, width, height } = imageContainer.getBoundingClientRect();
+    const mouseX = event.clientX - left;
+    const mouseY = event.clientY - top;
+    const offsetX = (mouseX / width) * 100;
+    const offsetY = (mouseY / height) * 100;
+
+    image.style.transformOrigin = `${offsetX}% ${offsetY}%`;
+    image.classList.add("zoomed");
+  }
+
+  function handleMouseLeave2() {
+    image.style.transformOrigin = "0 0";
+    image.classList.remove("zoomed");
+  }
+
   return (
     <Layout>
       <Base>
         <Main>
-          <ProductMainImage>
+          <ProductMainImage className="image-container">
             <img src={isHoverImg ? isHoverImg : product?.image[0]} alt="" />
           </ProductMainImage>
           <ProductDesc>
@@ -78,6 +100,12 @@ const ProductMainImage = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.5s ease-in-out;
+
+    &.zoomed {
+      z-index: 1;
+      transform: scale(3); /* 확대 비율 */
+    }
   }
 `;
 

@@ -31,7 +31,8 @@ const Login = () => {
     <Layout>
       <LoginForm onSubmit={handleSave}>
         <InputTitle to="/">Jian</InputTitle>
-        로그인
+        <div>로그인</div>
+        <div>ID: test@test.com / PW: test123</div>
         <InputWrapper data-text="id">
           <input type="text" {...register("id")} placeholder="id" id="id"></input>
         </InputWrapper>
