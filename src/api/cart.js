@@ -13,21 +13,24 @@ export const addToCart = async (product, user) => {
     return;
   }
 
+  const currentUser = JSON.parse(window.localStorage.getItem('currentUser'))
+  const userUid = currentUser.currentUser.user.uid;
+
   try {
-    const { userId, amount, category, id, image, name, price, size } = product;
-    const cartRef = doc(db, "carts", userId);
+    const { amount, category, id, image, name, price } = product;
+    const cartRef = doc(db, "carts", userUid);
     const cartSnapshot = await getDoc(cartRef);
     const quantity = 1;
 
     if (cartSnapshot.exists()) {
       // 장바구니가 이미 존재하는 경우, 상품 추가
       await updateDoc(cartRef, {
-        items: arrayUnion({ id, userId, quantity, name, price, image, category, amount }),
+        items: arrayUnion({ id, userUid, quantity, name, price, image, category, amount }),
       });
     } else {
       // 장바구니가 존재하지 않는 경우, 새로운 장바구니 생성
       await setDoc(cartRef, {
-        items: [{ id, userId, quantity, name, price, category, image, amount }],
+        items: [{ id, userUid, quantity, name, price, category, image, amount }],
       });
     }
 

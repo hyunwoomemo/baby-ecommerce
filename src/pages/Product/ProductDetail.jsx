@@ -65,7 +65,7 @@ function ProductDetails() {
                     .filter((v, i) => i !== 0)
                     .map((v, i, arr) => {
                       return (
-                        <SubImage>
+                        <SubImage key={i}>
                           <img onMouseOver={(e) => handleMouseOver(e)} onMouseLeave={(e) => handleMouseLeave(e)} src={v} alt="" />
                         </SubImage>
                       );
@@ -89,6 +89,10 @@ const Base = styled.div`
 const Main = styled.div`
   display: flex;
   gap: 2rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const ProductMainImage = styled.div`

@@ -6,10 +6,6 @@ const Header = () => {
     <Base>
       <Container>
         <Title>Dashboard</Title>
-        <ul>
-          <li>알림</li>
-          <li>프로필</li>
-        </ul>
       </Container>
     </Base>
   );

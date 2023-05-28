@@ -33,6 +33,10 @@ const Container = styled.div`
 const Btn = styled.div`
   align-self: flex-end;
   cursor: pointer;
+  padding: 10px 16px;
+  background-color: tomato;
+  color: #fff;
+  border-radius: 10px;
 
   &:hover {
     color: var(--primary-color);

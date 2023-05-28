@@ -69,6 +69,12 @@ const Header = () => {
     window.localStorage.removeItem("currentUser");
   };
 
+  // 모바일 환경에서 sidenavbar의 상태 관리
+  const [showNav, setShowNav] = useState(false);
+  const handleSideNavbar = () => {
+    setShowNav(!showNav);
+  };
+
   return (
     <Base isFixed={isFixed} isScroll={isScroll}>
       <HeaderWrapper>
@@ -143,6 +149,10 @@ const HeaderWrapper = styled.ul`
     gap: 1rem;
     align-items: center;
 
+    @media (max-width: 768px) {
+      /* display: none; */
+    }
+
     &:last-of-type {
       justify-content: space-between;
       font-size: 24px;
@@ -160,7 +170,7 @@ const HeaderWrapper = styled.ul`
           justify-content: center;
           align-items: center;
 
-          background-color: gray;
+          background-color: tomato;
           border-radius: 50%;
           font-size: 16px;
           color: #fff;
@@ -172,6 +182,60 @@ const HeaderWrapper = styled.ul`
       }
     }
   }
+`;
+
+const SideNavBar = styled.div`
+  @media (min-width: 769px) {
+    display: none;
+  }
+
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+
+  > span {
+    transition: all 0.3s;
+    ${({ showNav }) =>
+      showNav
+        ? css`
+            &:nth-of-type(2) {
+              opacity: 0;
+            }
+
+            &:first-of-type {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%) rotate(40deg);
+              transform-origin: 50% 50%;
+            }
+
+            &:last-of-type {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%) rotate(-45deg);
+              transform-origin: 50% 50%;
+            }
+          `
+        : css``}
+
+    border-radius: 3px;
+    width: 20px;
+    height: 3px;
+    display: inline-block;
+    background-color: #525252;
+  }
+`;
+
+const Slide = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 150px;
+
+  background-color: #fff;
 `;
 
 const Logout = styled.div`

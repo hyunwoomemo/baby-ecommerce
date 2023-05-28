@@ -11,7 +11,7 @@ const Signup = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
 
-  const { mutate: signupMutation } = useMutation((data) => create(firebaseAuth, data.id, data.pw), {
+  const { mutate: signupMutation } = useMutation((data) => create(firebaseAuth, data.email, data.pw), {
     onSuccess: () => {
       navigate("/");
     },
@@ -29,8 +29,8 @@ const Signup = () => {
       <SignupForm onSubmit={handleSave}>
         <InputTitle>Jian</InputTitle>
         회원가입
-        <InputWrapper data-text="id">
-          <input type="text" {...register("id")} placeholder="id" id="id"></input>
+        <InputWrapper data-text="email">
+          <input type="text" {...register("email")} placeholder="email" id="id"></input>
         </InputWrapper>
         <InputWrapper data-text="password">
           <input type="password" {...register("pw")} placeholder="password" id="pw" />

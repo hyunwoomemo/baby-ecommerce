@@ -9,6 +9,7 @@ import Portal from "../common/Portal";
 import { useRecoilState } from "recoil";
 import { addProductState } from "../../../recoil/atoms/adminAtom";
 import { useMutation, useQueryClient } from "react-query";
+import { ButtonWrapper, Form, InputWrapper } from "../../Auth/Layout";
 
 const AddProduct = () => {
   const [selectedImages, setSelectedImages] = useState(null);
@@ -78,7 +79,7 @@ const AddProduct = () => {
     <Portal selector="#portal">
       <Overlay show={addProduct} onClick={() => setAddProduct(false)}></Overlay>
       <Base show={addProduct}>
-        <Form onSubmit={handleSave}>
+        <AddForm onSubmit={handleSave}>
           <FileInputWrapper>
             <FileInputLabel htmlFor="file-input">이미지 선택</FileInputLabel>
             <FileCount>{previewImages && previewImages.length > 0 && `파일 개수: ${previewImages.length}`}</FileCount>
@@ -93,12 +94,22 @@ const AddProduct = () => {
                 </ImageWrapper>
               ))}
           </PreviewWrapper>
-          <input type="text" placeholder="상품명" {...register("name")} />
-          <input type="number" placeholder="가격" {...register("price")} />
-          <input type="number" placeholder="재고" min={0} {...register("amount")} />
-          <input type="text" placeholder="카테고리" {...register("category")} />
-          <button type="submit">상품 등록</button>
-        </Form>
+          <InputWrapper>
+            <input type="text" placeholder="상품명" {...register("name")} />
+          </InputWrapper>
+          <InputWrapper>
+            <input type="number" placeholder="가격" {...register("price")} />
+          </InputWrapper>
+          <InputWrapper>
+            <input type="number" placeholder="재고" min={0} {...register("amount")} />
+          </InputWrapper>
+          <InputWrapper>
+            <input type="text" placeholder="카테고리" {...register("category")} />
+          </InputWrapper>
+          <ButtonWrapper>
+            <button type="submit">상품 등록</button>
+          </ButtonWrapper>
+        </AddForm>
       </Base>
     </Portal>
   );
@@ -141,7 +152,7 @@ const Base = styled.div`
   background-color: #fff;
 `;
 
-const Form = styled.form`
+const AddForm = styled(Form)`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
