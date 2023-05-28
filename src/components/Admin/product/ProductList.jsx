@@ -3,7 +3,7 @@ import AddProduct from "./AddProduct";
 import MuiTable from "./MuiTable";
 import styled from "@emotion/styled";
 import { useRecoilState } from "recoil";
-import { addProductState } from "../../../recoil/adminAtom";
+import { addProductState } from "../../../recoil/atoms/adminAtom";
 
 const ProductList = () => {
   const [addProduct, setAddProduct] = useRecoilState(addProductState);

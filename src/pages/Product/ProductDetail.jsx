@@ -3,6 +3,11 @@ import { useProduct } from "../../hooks/useProduct";
 import { useParams } from "react-router-dom";
 import Layout from "../../components/Client/common/Layout";
 import styled from "@emotion/styled";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "@firebase/firestore";
+import { db } from "../../service/firebase";
+import { cartState } from "../../recoil/atoms/cartAtom";
+import { addToCart } from "../../api/cart";
 import { numberWithCommas } from "../../utils/Won";
 
 function ProductDetails() {
@@ -45,7 +50,7 @@ function ProductDetails() {
                     })
                 : undefined}
             </SubImageWrapper>
-            <CartBtn>장바구니 담기</CartBtn>
+            <CartBtn onClick={() => addToCart(product, currentUser)}>장바구니 담기</CartBtn>
           </ProductDesc>
         </Main>
       </Base>

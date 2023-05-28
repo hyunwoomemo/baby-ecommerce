@@ -2,7 +2,9 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import React, { useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { AiOutlineUser, AiOutlineShoppingCart } from "react-icons/ai";
+import { AiOutlineUser, AiOutlineSearch, AiOutlineShoppingCart } from "react-icons/ai";
+import { GetCartItemCount } from "../../../api/cart";
+import { firebaseAuth } from "../../../service/firebase";
 import { getAuth, signOut } from "firebase/auth";
 
 const Header = () => {
@@ -44,6 +46,22 @@ const Header = () => {
     }
   };
 
+  // 장바구니 클릭
+  const handleCart = () => {
+    if (localStorageUser) {
+      navigate("/cart");
+    } else {
+      console.log("login");
+      navigate("/login");
+    }
+  };
+
+  // 장바구니 아이템 갯수
+  const currentUser = JSON.parse(window.localStorage.getItem("currentUser"));
+  const userUid = currentUser?.currentUser?.user?.uid;
+
+  const cartItemCount = GetCartItemCount(userUid);
+
   const auth = getAuth();
 
   const handleLogout = () => {
@@ -63,7 +81,7 @@ const Header = () => {
           <NavLink to="/admin/product">admin page</NavLink>
         </ul>
         <ul>
-          <li>
+          <li onClick={handleCart} data-count={cartItemCount}>
             <AiOutlineShoppingCart />
           </li>
           <li onClick={() => handleLink()}>

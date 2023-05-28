@@ -7,7 +7,7 @@ import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import Portal from "../common/Portal";
 import { useRecoilState } from "recoil";
-import { addProductState } from "../../../recoil/adminAtom";
+import { addProductState } from "../../../recoil/atoms/adminAtom";
 
 const AddProduct = () => {
   const [selectedImages, setSelectedImages] = useState(null);

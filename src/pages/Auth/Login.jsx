@@ -6,7 +6,7 @@ import Layout, { ButtonWrapper, Form, InputTitle, InputWrapper } from "../../com
 import { firebaseAuth, login } from "../../service/firebase";
 import { useMutation } from "react-query";
 import { useRecoilState } from "recoil";
-import { currentUserAtom } from "../../recoil/currentUserAtom";
+import { currentUserAtom } from "../../recoil/atoms/currentUserAtom";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
