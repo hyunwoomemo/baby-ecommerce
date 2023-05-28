@@ -21,9 +21,11 @@ import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { fetchProducts } from "../../../api/product";
 import styled from "@emotion/styled";
+import { deleteDoc, doc } from "@firebase/firestore";
+import { db } from "../../../service/firebase";
 
 function createData(id, name, category, price, amount, image) {
   return {
@@ -146,9 +148,7 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-function EnhancedTableToolbar(props) {
-  const { numSelected } = props;
-
+function EnhancedTableToolbar({ numSelected, handleDelete }) {
   return (
     <Toolbar
       sx={{
@@ -172,7 +172,7 @@ function EnhancedTableToolbar(props) {
       {numSelected > 0 ? (
         <Tooltip title="Delete">
           <IconButton>
-            <DeleteIcon />
+            <DeleteIcon onClick={handleDelete} />
           </IconButton>
         </Tooltip>
       ) : (
@@ -188,6 +188,7 @@ function EnhancedTableToolbar(props) {
 
 EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
+  handleDelete: PropTypes.func.isRequired,
 };
 
 export default function MuiTable() {
@@ -198,6 +199,7 @@ export default function MuiTable() {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+  console.log(selected);
   const [rows, setRows] = React.useState([]);
   const { data: products } = useQuery("products", fetchProducts);
 
@@ -260,12 +262,28 @@ export default function MuiTable() {
 
   const visibleRows = React.useMemo(() => stableSort(rows, getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage), [order, orderBy, page, rowsPerPage, rows]);
 
-  console.log(rows);
+  const queryClient = useQueryClient();
+
+  const handleDelete = async () => {
+    await mutation.mutateAsync();
+  };
+
+  const mutation = useMutation(
+    () =>
+      selected.forEach((v) => {
+        deleteDoc(doc(db, "products", v));
+      }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("products");
+      },
+    }
+  );
 
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} handleDelete={handleDelete} />
         <TableContainer>
           <CustomTable sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={dense ? "small" : "medium"}>
             <EnhancedTableHead numSelected={selected.length} order={order} orderBy={orderBy} onSelectAllClick={handleSelectAllClick} onRequestSort={handleRequestSort} rowCount={rows.length} />

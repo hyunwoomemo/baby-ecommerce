@@ -36,7 +36,6 @@ const AddProduct = () => {
         name: data.name,
         price: data.price,
         amount: data.amount,
-        size: data.size,
         category: data.category,
       });
     } catch (error) {
@@ -75,7 +74,6 @@ const AddProduct = () => {
           <input type="text" placeholder="상품명" {...register("name")} />
           <input type="number" placeholder="가격" {...register("price")} />
           <input type="number" placeholder="재고" min={0} {...register("amount")} />
-          <input type="text" placeholder="사이즈" {...register("size")} />
           <input type="text" placeholder="카테고리" {...register("category")} />
           <button type="submit">상품 등록</button>
         </Form>
