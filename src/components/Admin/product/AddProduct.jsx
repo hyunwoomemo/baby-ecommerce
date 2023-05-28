@@ -8,6 +8,7 @@ import { css } from "@emotion/react";
 import Portal from "../common/Portal";
 import { useRecoilState } from "recoil";
 import { addProductState } from "../../../recoil/atoms/adminAtom";
+import { useMutation, useQueryClient } from "react-query";
 
 const AddProduct = () => {
   const [selectedImages, setSelectedImages] = useState(null);
@@ -23,8 +24,9 @@ const AddProduct = () => {
     setSelectedImages(images);
   };
 
-  const handleSave = handleSubmit(async (data) => {
-    try {
+  const queryClient = useQueryClient();
+  const saveProductMutation = useMutation(
+    async (data) => {
       const currentUser = JSON.parse(window.localStorage.getItem("currentUser"));
       const userId = currentUser.currentUser.user.uid;
       const imageURL = await uploadImage(selectedImages);
@@ -38,8 +40,18 @@ const AddProduct = () => {
         amount: data.amount,
         category: data.category,
       });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("products");
+      },
+    }
+  );
+
+  const handleSave = handleSubmit(async (data) => {
+    try {
+      await saveProductMutation.mutateAsync(data);
     } catch (error) {
-      // 상품 등록 요청 중 오류 발생
       console.log(error);
     }
   });

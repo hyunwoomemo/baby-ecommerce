@@ -198,8 +198,6 @@ export default function MuiTable() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-  console.log(selected);
   const [rows, setRows] = React.useState([]);
   const { data: products } = useQuery("products", fetchProducts);
 
