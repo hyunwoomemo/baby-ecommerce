@@ -1,13 +1,12 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import React, { useEffect, useState } from "react";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineUser, AiOutlineShoppingCart } from "react-icons/ai";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { getAuth, signOut } from "firebase/auth";
 
 const Header = () => {
   const location = useLocation();
-
-  // 헤더와 홈 화면의 이미지가 어우러질 수 있게 fixed속성, 스크롤 하기 전에는 배경색을 투명
   const [isFixed, setIsFixed] = useState(false);
   const [isScroll, setIsScroll] = useState(false);
 
@@ -31,6 +30,27 @@ const Header = () => {
     location.pathname === "/" ? setIsFixed(true) : setIsFixed(false);
   }, [location]);
 
+  const localStorageUser = window.localStorage.getItem("currentUser");
+  const navigate = useNavigate();
+
+  const [isLogout, setIsLogout] = useState(false);
+
+  const handleLink = () => {
+    if (localStorageUser) {
+      setIsLogout(!isLogout);
+    } else {
+      console.log("login");
+      navigate("/login");
+    }
+  };
+
+  const auth = getAuth();
+
+  const handleLogout = () => {
+    signOut(auth);
+    window.localStorage.removeItem("currentUser");
+  };
+
   return (
     <Base isFixed={isFixed} isScroll={isScroll}>
       <HeaderWrapper>
@@ -46,8 +66,11 @@ const Header = () => {
           <li>
             <AiOutlineShoppingCart />
           </li>
-          <li>
+          <li onClick={() => handleLink()}>
             <AiOutlineUser />
+            <Logout isLogout={isLogout} onClick={handleLogout}>
+              <button>logout</button>
+            </Logout>
           </li>
         </ul>
       </HeaderWrapper>
@@ -131,6 +154,21 @@ const HeaderWrapper = styled.ul`
       }
     }
   }
+`;
+
+const Logout = styled.div`
+  position: absolute;
+  transition: all 0.3s;
+  ${({ isLogout }) =>
+    isLogout
+      ? css`
+          opacity: 1;
+          pointer-events: all;
+        `
+      : css`
+          opacity: 0;
+          pointer-events: none;
+        `}
 `;
 
 export const Title = styled(Link)`
