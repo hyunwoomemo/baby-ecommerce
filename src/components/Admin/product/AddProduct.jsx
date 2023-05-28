@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { uploadImage } from "../../../utils/uploadImage";
 import { addDoc, collection } from "@firebase/firestore";
@@ -14,7 +14,7 @@ const AddProduct = () => {
   const [selectedImages, setSelectedImages] = useState(null);
   const [previewImages, setPreviewImages] = useState(null);
   const fileInputRef = useRef();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const handleImageChange = (e) => {
     const files = e.target.files;
@@ -63,6 +63,14 @@ const AddProduct = () => {
   };
 
   const [addProduct, setAddProduct] = useRecoilState(addProductState);
+
+  useEffect(() => {
+    if (!addProduct) {
+      reset({ name: "", price: "", amount: "", category: "" });
+      setPreviewImages();
+      setSelectedImages();
+    }
+  }, [addProduct]);
 
   return (
     <Portal selector="#portal">
