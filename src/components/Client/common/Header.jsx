@@ -2,11 +2,14 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import React, { useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { AiOutlineUser, AiOutlineSearch, AiOutlineShoppingCart } from "react-icons/ai";
+import { AiOutlineUser, AiOutlineShoppingCart } from "react-icons/ai";
 import { GetCartItemCount } from "../../../api/cart";
-import { firebaseAuth } from "../../../service/firebase";
 import { getAuth, signOut } from "firebase/auth";
 import { toast } from "react-hot-toast";
+import { GiHamburgerMenu } from "react-icons/gi";
+import SideNav from "./SideNav";
+import { sideNavState } from "../../../recoil/atoms/sidenavAtom";
+import { useRecoilState } from "recoil";
 
 const Header = () => {
   const location = useLocation();
@@ -72,10 +75,8 @@ const Header = () => {
   };
 
   // 모바일 환경에서 sidenavbar의 상태 관리
-  const [showNav, setShowNav] = useState(false);
-  const handleSideNavbar = () => {
-    setShowNav(!showNav);
-  };
+
+  const [sideNav, setSideNav] = useRecoilState(sideNavState);
 
   return (
     <Base isFixed={isFixed} isScroll={isScroll}>
@@ -99,6 +100,10 @@ const Header = () => {
             </Logout>
           </li>
         </ul>
+        <Mobile>
+          <GiHamburgerMenu onClick={() => setSideNav(true)} />
+          <SideNav isLogout={isLogout} handleLogout={handleLogout} handleCart={handleCart} cartItemCount={cartItemCount} handleLink={handleLink} />
+        </Mobile>
       </HeaderWrapper>
     </Base>
   );
@@ -152,7 +157,7 @@ const HeaderWrapper = styled.ul`
     align-items: center;
 
     @media (max-width: 768px) {
-      /* display: none; */
+      display: none;
     }
 
     &:last-of-type {
@@ -186,58 +191,10 @@ const HeaderWrapper = styled.ul`
   }
 `;
 
-const SideNavBar = styled.div`
+const Mobile = styled.div`
   @media (min-width: 769px) {
     display: none;
   }
-
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-
-  > span {
-    transition: all 0.3s;
-    ${({ showNav }) =>
-      showNav
-        ? css`
-            &:nth-of-type(2) {
-              opacity: 0;
-            }
-
-            &:first-of-type {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%) rotate(40deg);
-              transform-origin: 50% 50%;
-            }
-
-            &:last-of-type {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%) rotate(-45deg);
-              transform-origin: 50% 50%;
-            }
-          `
-        : css``}
-
-    border-radius: 3px;
-    width: 20px;
-    height: 3px;
-    display: inline-block;
-    background-color: #525252;
-  }
-`;
-
-const Slide = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 100vh;
-  width: 150px;
-
-  background-color: #fff;
 `;
 
 const Logout = styled.div`

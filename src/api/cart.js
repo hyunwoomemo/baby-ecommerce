@@ -15,7 +15,7 @@ export const addToCart = async (product, user) => {
   }
 
   const currentUser = JSON.parse(window.localStorage.getItem('currentUser'))
-  const userUid = currentUser.currentUser.user.uid;
+  const userUid = currentUser?.currentUser?.user.uid;
 
   try {
     const { amount, category, id, image, name, price } = product;

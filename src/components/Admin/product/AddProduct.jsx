@@ -10,6 +10,7 @@ import { useRecoilState } from "recoil";
 import { addProductState } from "../../../recoil/atoms/adminAtom";
 import { useMutation, useQueryClient } from "react-query";
 import { ButtonWrapper, Form, InputWrapper } from "../../Auth/Layout";
+import { toast } from "react-hot-toast";
 
 const AddProduct = () => {
   const [selectedImages, setSelectedImages] = useState(null);
@@ -51,6 +52,7 @@ const AddProduct = () => {
 
   const handleSave = handleSubmit(async (data) => {
     try {
+      toast.success("상품이 등록되었습니다.");
       await saveProductMutation.mutateAsync(data);
     } catch (error) {
       console.log(error);
