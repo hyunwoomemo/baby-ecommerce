@@ -13,7 +13,7 @@ const SideNav = ({ handleCart, cartItemCount, handleLink, isLogout, handleLogout
     <Portal selector="#portal">
       <Container sideNav={sideNav}>
         <Overlay onClick={() => setSideNav(false)}></Overlay>
-        <SideNavbar sideNav={sideNav}>
+        <SideNavbar sideNav={sideNav} onClick={() => setSideNav(false)}>
           <ul>
             <Link to="/" activeclassname="active" end>
               home
@@ -39,6 +39,7 @@ const SideNav = ({ handleCart, cartItemCount, handleLink, isLogout, handleLogout
 };
 
 const Container = styled.div`
+  overflow: hidden;
   ${({ sideNav }) =>
     sideNav
       ? css`
@@ -49,13 +50,11 @@ const Container = styled.div`
           opacity: 0;
           pointer-events: none;
         `}
-
-  overflow-x: hidden;
 `;
 
 const Overlay = styled.div`
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   position: absolute;
   top: 0;
   left: 0;
@@ -64,7 +63,7 @@ const Overlay = styled.div`
 
 const SideNavbar = styled.div`
   width: 200px;
-  height: 100vh;
+  height: 100%;
   position: absolute;
   top: 0;
   right: 0;
@@ -75,10 +74,10 @@ const SideNavbar = styled.div`
   ${({ sideNav }) =>
     sideNav
       ? css`
-          transform: translateX(0);
+          opacity: 1;
         `
       : css`
-          transform: translateX(100%);
+          opacity: 0;
         `}
 
   >ul {

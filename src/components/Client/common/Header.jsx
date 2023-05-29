@@ -102,8 +102,8 @@ const Header = () => {
         </ul>
         <Mobile>
           <GiHamburgerMenu onClick={() => setSideNav(true)} />
-          <SideNav isLogout={isLogout} handleLogout={handleLogout} handleCart={handleCart} cartItemCount={cartItemCount} handleLink={handleLink} />
         </Mobile>
+        <SideNav isLogout={isLogout} handleLogout={handleLogout} handleCart={handleCart} cartItemCount={cartItemCount} handleLink={handleLink} />
       </HeaderWrapper>
     </Base>
   );
@@ -137,6 +137,7 @@ const HeaderWrapper = styled.ul`
   justify-content: space-between;
   align-items: center;
   padding: 2rem;
+  overflow: hidden;
 
   .active {
     background-color: #ccc;

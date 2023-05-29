@@ -140,6 +140,9 @@ const resetStyle = css`
   * {
     box-sizing: border-box;
     color: var(--text-color);
+    user-select: none;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
   }
 
   html,
