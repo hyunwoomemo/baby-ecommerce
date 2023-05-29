@@ -23,3 +23,5 @@
 
 ### 서비스 페이지
 <a href="https://jian-shop.vercel.app/" target="_blank"><img src="https://img.shields.io/badge/jian-shop-0A0A0A?style=for-the-badge&logo=dev.to&logoColor=white"></a>
+
+![image](https://github.com/hyunwoomemo/baby-ecommerce/assets/105469077/d706d551-3ab4-452a-a27b-529fa912f6ec)
