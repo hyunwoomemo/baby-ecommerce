@@ -49,6 +49,8 @@ const Container = styled.div`
           opacity: 0;
           pointer-events: none;
         `}
+
+  overflow-x: hidden;
 `;
 
 const Overlay = styled.div`
