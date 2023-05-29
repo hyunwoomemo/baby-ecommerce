@@ -5,6 +5,7 @@ import { firebaseAuth, create } from "../../service/firebase";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
+import { toast } from "react-hot-toast";
 
 const Signup = () => {
   const [errorMsg, setErrorMsg] = useState(" ");
@@ -13,10 +14,11 @@ const Signup = () => {
 
   const { mutate: signupMutation } = useMutation((data) => create(firebaseAuth, data.email, data.pw), {
     onSuccess: () => {
+      toast.successc("회원가입에 성공했습니다.");
       navigate("/");
     },
     onError: (err) => {
-      console.log(err);
+      toast.error("회원가입에 실패했습니다.");
     },
   });
 

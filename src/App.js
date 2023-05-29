@@ -10,6 +10,7 @@ import Signup from "./pages/Auth/Signup";
 import Product from "./pages/Admin/Product";
 import ProductList from "./pages/Product/ProductList";
 import ProductDetails from "./pages/Product/ProductDetail";
+import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient()
 
@@ -17,6 +18,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <RecoilRoot>
+        <Toaster></Toaster>
         <GlobalStyle />
         <Router>
           <Routes>

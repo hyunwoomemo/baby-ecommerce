@@ -6,6 +6,7 @@ import { AiOutlineUser, AiOutlineSearch, AiOutlineShoppingCart } from "react-ico
 import { GetCartItemCount } from "../../../api/cart";
 import { firebaseAuth } from "../../../service/firebase";
 import { getAuth, signOut } from "firebase/auth";
+import { toast } from "react-hot-toast";
 
 const Header = () => {
   const location = useLocation();
@@ -66,6 +67,7 @@ const Header = () => {
 
   const handleLogout = () => {
     signOut(auth);
+    toast.success("로그아웃 되었습니다.");
     window.localStorage.removeItem("currentUser");
   };
 

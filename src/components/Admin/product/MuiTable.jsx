@@ -225,7 +225,7 @@ export default function MuiTable() {
   };
 
   const handleClick = (event, id) => {
-    const selectedIndex = selected.indexOf(id);
+    const selectedIndex = selected?.indexOf(id);
     let newSelected = [];
 
     if (selectedIndex === -1) {
@@ -264,13 +264,13 @@ export default function MuiTable() {
   const queryClient = useQueryClient();
 
   const handleDelete = async () => {
-    await mutation.mutateAsync();
+    await mutation?.mutateAsync();
     setSelected();
   };
 
   const mutation = useMutation(
     () =>
-      selected.forEach((v) => {
+      selected?.forEach((v) => {
         deleteDoc(doc(db, "products", v));
       }),
     {

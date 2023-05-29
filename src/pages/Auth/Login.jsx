@@ -7,6 +7,7 @@ import { firebaseAuth, login } from "../../service/firebase";
 import { useMutation } from "react-query";
 import { useRecoilState } from "recoil";
 import { currentUserAtom } from "../../recoil/atoms/currentUserAtom";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
@@ -24,6 +25,7 @@ const Login = () => {
   });
 
   const handleSave = handleSubmit((data) => {
+    toast.success("로그인에 성공했습니다.");
     loginMutation(data);
   });
 

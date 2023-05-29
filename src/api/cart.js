@@ -4,12 +4,13 @@ import { useRecoilState } from "recoil";
 import { cartCountState } from "../recoil/atoms/cartAtom";
 import { useEffect } from "react";
 import { useMutation, useQueryClient } from "react-query";
+import { toast } from "react-hot-toast";
 
 
 export const addToCart = async (product, user) => {
   if (!user) {
     // 로그인되지 않은 경우에 대한 처리
-    console.log("Please login to add items to your cart.");
+    toast.error("로그인이 필요합니다.")
     return;
   }
 
@@ -66,12 +67,15 @@ export function GetCartItemCount(userUid) {
         ...doc.data(),
       }));
 
-      if (cartsArray[0]?.id === userUid) {
-        setCartItemCount(cartsArray[0]?.items.length);
-      } else {
+      console.log(cartsArray)
 
-        setCartItemCount(0);
-      }
+      cartsArray.forEach((v) => {
+        if (v.id === userUid) {
+          setCartItemCount(v.items.length)
+        } else {
+          setCartItemCount(0);
+        }
+      })
     });
 
     return () => unsubscribe();

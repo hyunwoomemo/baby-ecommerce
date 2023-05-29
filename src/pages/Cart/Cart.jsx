@@ -58,20 +58,6 @@ const Cart = () => {
 
   const total = numberWithCommas(totalPrice);
 
-  // 장바구니 아이템 삭제
-
-  const queryClient = useQueryClient();
-
-  const handleDelete = async (userId) => {
-    await mutation.mutateAsync(userId);
-  };
-
-  const mutation = useMutation((userId) => deleteDoc(doc(db, "carts", userId)), {
-    onSuccess: () => {
-      queryClient.invalidateQueries("carts");
-    },
-  });
-
   return (
     <Layout>
       <Container>
@@ -120,7 +106,7 @@ const Cart = () => {
                     <td>
                       <Price>{numberWithCommas(v.price * v.quantity)}원</Price>
                     </td>
-                    <Delete onClick={() => handleDelete(v.userId)}>삭제</Delete>
+                    <Delete>삭제</Delete>
                   </CartRow>
                 );
               })}
